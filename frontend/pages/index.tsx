@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
-import DarkVeil from '@/components/DarkVeil';
+import dynamic from 'next/dynamic';
+
+// Dynamic import to prevent SSR issues with WebGL
+const DarkVeil = dynamic(() => import('@/components/DarkVeil'), {
+  ssr: false,
+});
 
 export default function Welcome() {
   const router = useRouter();
@@ -56,20 +60,6 @@ export default function Welcome() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
-        {/* Logo */}
-        <div className={`mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2A2A5B] to-[#121235] rounded-2xl blur-2xl opacity-50 animate-pulse"></div>
-            <Image 
-              src="/finchatbot.jpg" 
-              alt="XenorAI Logo" 
-              width={120} 
-              height={120}
-              className="rounded-2xl relative z-10 shadow-2xl"
-            />
-          </div>
-        </div>
-
         {/* Welcome Text */}
         <div className={`text-center mb-8 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h1 className="text-7xl md:text-8xl font-bold text-white mb-6 animate-pulse">

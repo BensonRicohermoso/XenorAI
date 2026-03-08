@@ -1,10 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import ChatWindow from '@/components/ChatWindow';
 import ChatInput from '@/components/ChatInput';
 import { sendMessage } from '@/utils/api';
-import DarkVeil from '@/components/DarkVeil';
+
+// Dynamic import to prevent SSR issues with WebGL
+const DarkVeil = dynamic(() => import('@/components/DarkVeil'), {
+  ssr: false,
+});
 
 interface Message {
   role: 'user' | 'assistant';
@@ -115,30 +120,6 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235] relative">
-      {/* DarkVeil Animated Background */}
-      <div className="fixed inset-0 z-0">
-        <DarkVeil
-          hueShift={0}
-          noiseIntensity={0.09}
-          scanlineIntensity={0}
-          speed={1.1}
-          scanlineFrequency={0.5}
-          warpAmount={0}
-        />
-      </div>
-
-      {/* Grid Background Overlay */}
-      <div 
-        className="fixed inset-0 opacity-20 pointer-events-none z-0"
-        style={{
-          backgroundImage: 'url(/grid-background.jpg)',
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center bottom',
-          backgroundRepeat: 'no-repeat',
-          mixBlendMode: 'screen'
-        }}
-      />
-      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 py-4">
         <div className="container mx-auto px-6">
@@ -160,8 +141,32 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10 h-full overflow-y-scroll snap-y snap-mandatory pt-20 hide-scrollbar">
       {/* Hero Section with Chat */}
-      <section ref={heroRef} className="h-screen snap-start flex flex-col">
-        <div className="flex-1 container mx-auto px-6 py-8 flex items-center">
+      <section ref={heroRef} className="h-screen snap-start flex flex-col relative">
+        {/* DarkVeil Animated Background - Only for Hero Section */}
+        <div className="absolute inset-0 z-0">
+          <DarkVeil
+            hueShift={0}
+            noiseIntensity={0.09}
+            scanlineIntensity={0}
+            speed={1.1}
+            scanlineFrequency={0.5}
+            warpAmount={0}
+          />
+        </div>
+
+        {/* Grid Background Overlay */}
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none z-0"
+          style={{
+            backgroundImage: 'url(/grid-background.jpg)',
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center bottom',
+            backgroundRepeat: 'no-repeat',
+            mixBlendMode: 'screen'
+          }}
+        />
+
+        <div className="flex-1 container mx-auto px-6 py-8 flex items-center relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl mx-auto">
             {/* Left Side - Hero Content */}
             <div className="flex flex-col justify-center">
@@ -191,7 +196,7 @@ export default function Home() {
       </section>
 
       {/* What is XenorAI Section */}
-      <section ref={featureRef} className="min-h-screen snap-start flex items-center py-20 bg-gradient-to-br from-[#2A2A5B]/95 to-[#121235]/95 backdrop-blur-md">
+      <section ref={featureRef} className="min-h-screen snap-start flex items-center py-20 relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <h2 className={`text-5xl font-bold text-center mb-4 text-white ${isFeatureVisible ? 'animate-slideUp' : 'opacity-0'}`}>What is XenorAI?</h2>
@@ -244,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer ref={footerRef} className="min-h-screen snap-start bg-[#1A1A45] py-20">
+      <footer ref={footerRef} className="min-h-screen snap-start py-20 relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             {/* Footer Title */}
