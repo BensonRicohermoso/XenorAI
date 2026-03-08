@@ -31,7 +31,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }) => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type your message here... (Press Enter to send)"
-            className="w-full px-4 py-3 border border-white/30 bg-white/10 text-white placeholder-white/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className="w-full px-4 py-3 border border-white/30 bg-white/10 text-white placeholder-white/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A2A5B] focus:border-transparent resize-none hide-scrollbar"
             rows={1}
             disabled={isLoading}
             style={{ 
@@ -52,7 +52,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }) => {
           className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 ${
             !input.trim() || isLoading
               ? 'bg-white/10 text-white/50 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105'
+              : 'bg-gradient-to-r from-[#2A2A5B] to-[#121235] text-white hover:shadow-lg hover:shadow-[#2A2A5B]/50 hover:scale-105'
           }`}
         >
           {isLoading ? (
