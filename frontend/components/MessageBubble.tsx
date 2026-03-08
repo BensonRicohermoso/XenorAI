@@ -28,7 +28,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ role, content }) => {
         <div className={`px-4 py-3 rounded-2xl ${
           isUser 
             ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-tr-none' 
-            : 'bg-gray-100 text-gray-800 rounded-tl-none'
+            : 'bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-tl-none'
         } shadow-md`}>
           <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
             {content}

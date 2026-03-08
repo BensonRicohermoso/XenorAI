@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import ChatWindow from '@/components/ChatWindow';
 import ChatInput from '@/components/ChatInput';
 import { sendMessage } from '@/utils/api';
@@ -54,22 +55,26 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235]">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="sticky top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/20 shadow-lg">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">X</span>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+              <Image 
+                src="/finchatbot.jpg" 
+                alt="XenorAI Logo" 
+                width={32} 
+                height={32}
+                className="rounded-lg"
+              />
+              <span className="text-xl font-bold text-white">
                 XenorAI
               </span>
             </Link>
             <button
               onClick={handleClearChat}
-              className="px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+              className="px-4 py-2 text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
             >
               Clear Chat
             </button>
@@ -79,7 +84,7 @@ export default function Chat() {
 
       {/* Main Chat Area */}
       <main className="container mx-auto px-6 py-6 h-[calc(100vh-80px)] flex flex-col">
-        <div className="flex-1 bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col max-w-5xl mx-auto w-full">
+        <div className="flex-1 bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-w-5xl mx-auto w-full">
           <ChatWindow messages={messages} isLoading={isLoading} />
           <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
         </div>

@@ -23,7 +23,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isLoading }) => {
   }, [messages, isLoading]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-gray-50 to-white">
+    <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-transparent to-white/5">
       {messages.length === 0 ? (
         <div className="h-full flex flex-col items-center justify-center text-center">
           <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
@@ -31,22 +31,22 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isLoading }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome to XenorAI</h2>
-          <p className="text-gray-600 max-w-md">
+          <h2 className="text-2xl font-bold text-white mb-2">Welcome to XenorAI</h2>
+          <p className="text-white max-w-md">
             Start a conversation by typing your message below. I'm here to help with any questions you might have!
           </p>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-              <p className="text-sm text-gray-600">💡 Ask me questions about any topic</p>
+            <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-white/20">
+              <p className="text-sm text-white">💡 Ask me questions about any topic</p>
             </div>
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-              <p className="text-sm text-gray-600">✍️ Get help with writing and creativity</p>
+            <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-white/20">
+              <p className="text-sm text-white">✍️ Get help with writing and creativity</p>
             </div>
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-              <p className="text-sm text-gray-600">🔍 Research and learn new things</p>
+            <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-white/20">
+              <p className="text-sm text-white">🔍 Research and learn new things</p>
             </div>
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-              <p className="text-sm text-gray-600">💻 Get coding assistance and explanations</p>
+            <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-white/20">
+              <p className="text-sm text-white">💻 Get coding assistance and explanations</p>
             </div>
           </div>
         </div>
@@ -67,11 +67,11 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isLoading }) => {
                     <span className="text-white font-semibold text-sm">AI</span>
                   </div>
                 </div>
-                <div className="px-4 py-3 rounded-2xl rounded-tl-none bg-gray-100 shadow-md">
+                <div className="px-4 py-3 rounded-2xl rounded-tl-none bg-white/10 backdrop-blur-sm border border-white/20 shadow-md">
                   <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                   </div>
                 </div>
               </div>
