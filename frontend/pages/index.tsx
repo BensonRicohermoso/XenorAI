@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235] relative overflow-y-scroll snap-y snap-mandatory">
+    <div className="h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235] relative">
       {/* Grid Background Overlay */}
       <div 
         className="fixed inset-0 opacity-20 pointer-events-none"
@@ -66,13 +66,10 @@ export default function Home() {
         }}
       />
       
-      {/* Content */}
-      <div className="relative z-10">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/20 shadow-lg">
-        <div className="container mx-auto px-6 py-[10px]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+      <nav className="fixed top-0 left-0 right-0 z-50 py-4">
+        <div className="container mx-auto px-6">
+          <div className="flex items-center space-x-2">
             <Image 
               src="/finchatbot.jpg" 
               alt="XenorAI Logo" 
@@ -84,18 +81,11 @@ export default function Home() {
               XenorAI
             </span>
           </div>
-          <div className="flex items-center space-x-4">
-            <button 
-              onClick={handleClearChat}
-              className="px-6 py-2 text-white hover:bg-white/10 rounded-lg transition-all duration-200"
-            >
-              Clear Chat
-            </button>
-          </div>
-          </div>
         </div>
       </nav>
 
+      {/* Content */}
+      <div className="relative z-10 h-full overflow-y-scroll snap-y snap-mandatory pt-20">
       {/* Hero Section with Chat */}
       <section className="h-screen snap-start flex flex-col">
         <div className="flex-1 container mx-auto px-6 py-8 flex items-center">
