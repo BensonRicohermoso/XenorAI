@@ -58,7 +58,7 @@ export default function Chat() {
     <div className="min-h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235]">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/20 shadow-lg">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-6 py-[10px]">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <Image 

@@ -12,7 +12,6 @@ interface Message {
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showChat, setShowChat] = useState(false);
 
   const handleSendMessage = async (message: string) => {
     if (!message.trim() || isLoading) return;
@@ -50,17 +49,28 @@ export default function Home() {
   };
 
   const scrollToChat = () => {
-    setShowChat(true);
-    setTimeout(() => {
-      document.getElementById('chat-section')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    document.getElementById('chat-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235]">
+    <div className="h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235] relative overflow-y-scroll snap-y snap-mandatory">
+      {/* Grid Background Overlay */}
+      <div 
+        className="fixed inset-0 opacity-20 pointer-events-none"
+        style={{
+          backgroundImage: 'url(/grid-background.jpg)',
+          backgroundSize: '100% 100%',
+          backgroundPosition: 'center bottom',
+          backgroundRepeat: 'no-repeat',
+          mixBlendMode: 'screen'
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/20 shadow-lg">
-        <div className="container mx-auto px-6 py-6">
+        <div className="container mx-auto px-6 py-[10px]">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
             <Image 
@@ -75,109 +85,53 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            {showChat && (
-              <button
-                onClick={handleClearChat}
-                className="px-4 py-2 text-white hover:text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
-              >
-                Clear Chat
-              </button>
-            )}
             <button 
-              onClick={scrollToChat}
-              className="px-6 py-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-lg hover:bg-white/20 hover:border-white/40 transition-all duration-200"
+              onClick={handleClearChat}
+              className="px-6 py-2 text-white hover:bg-white/10 rounded-lg transition-all duration-200"
             >
-              {showChat ? 'Go to Chat' : 'Get Started'}
+              Clear Chat
             </button>
           </div>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <main className="container mx-auto px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-6xl font-bold mb-6 text-white leading-tight">
-            Your Intelligent AI Assistant
-          </h1>
-          <p className="text-xl text-white mb-12 max-w-2xl mx-auto">
-            Experience the power of conversational AI. XenorAI helps you with answers, 
-            creative content, problem-solving, and much more.
-          </p>
-          
-          <button 
-            onClick={scrollToChat}
-            className="inline-block px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white text-lg font-semibold rounded-xl hover:bg-white/20 hover:border-white/40 hover:scale-105 transition-all duration-200"
-          >
-            Start Chatting Now →
-          </button>
-        </div>
-
-        {/* Features Section */}
-        <div className="grid md:grid-cols-3 gap-8 mt-24 max-w-5xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/15 transition-all duration-200 border border-white/20">
-            <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-white">Lightning Fast</h3>
-            <p className="text-white">
-              Get instant responses powered by advanced AI technology with minimal latency.
-            </p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/15 transition-all duration-200 border border-white/20">
-            <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-white">Smart & Reliable</h3>
-            <p className="text-white">
-              Built with GPT technology to provide accurate and helpful responses every time.
-            </p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/15 transition-all duration-200 border border-white/20">
-            <div className="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-white">Natural Conversations</h3>
-            <p className="text-white">
-              Engage in fluid, natural conversations with context-aware responses.
-            </p>
-          </div>
-        </div>
-
-        {/* Chat Section */}
-        {showChat && (
-          <div id="chat-section" className="mt-24 max-w-6xl mx-auto animate-fadeIn">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text mb-4">
-                Start Your Conversation
-              </h2>
-              <p className="text-white">
-                Ask me anything - I'm here to help!
+      {/* Hero Section with Chat */}
+      <section className="h-screen snap-start flex flex-col">
+        <div className="flex-1 container mx-auto px-6 py-8 flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl mx-auto">
+            {/* Left Side - Hero Content */}
+            <div className="flex flex-col justify-center">
+              <h1 className="text-6xl font-bold mb-6 text-white leading-tight">
+                Your Intelligent AI Assistant
+              </h1>
+              <p className="text-xl text-white mb-8">
+                Experience the power of conversational AI. XenorAI helps you with answers, 
+                creative content, problem-solving, and much more.
+              </p>
+              <p className="text-lg text-white/80">
+                Start chatting with our AI assistant right now →
               </p>
             </div>
-            
-            <div className="bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl overflow-hidden h-[600px]">
-              <div className="h-full flex flex-col">
-                <ChatWindow messages={messages} isLoading={isLoading} />
-                <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+
+            {/* Right Side - Chat Interface */}
+            <div className="flex flex-col justify-center">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl overflow-hidden h-[600px]">
+                <div className="h-full flex flex-col">
+                  <ChatWindow messages={messages} isLoading={isLoading} />
+                  <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+                </div>
               </div>
             </div>
           </div>
-        )}
-      </main>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="container mx-auto px-6 py-8 mt-20 text-center text-white">
+      <footer className="h-16 flex items-center justify-center text-center text-white snap-start">
         <p>© 2026 XenorAI. Powered by OpenAI GPT.</p>
       </footer>
+      </div>
     </div>
   );
 }
