@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import DarkVeil from '@/components/DarkVeil';
 
 export default function Welcome() {
   const router = useRouter();
@@ -23,9 +24,21 @@ export default function Welcome() {
       onClick={handleClick}
       className="h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235] relative cursor-pointer overflow-hidden"
     >
+      {/* DarkVeil Animated Background */}
+      <div className="fixed inset-0 z-0">
+        <DarkVeil
+          hueShift={0}
+          noiseIntensity={0.09}
+          scanlineIntensity={0}
+          speed={1.1}
+          scanlineFrequency={0.5}
+          warpAmount={0}
+        />
+      </div>
+
       {/* Grid Background Overlay */}
       <div 
-        className="fixed inset-0 opacity-20 pointer-events-none"
+        className="fixed inset-0 opacity-20 pointer-events-none z-0"
         style={{
           backgroundImage: 'url(/grid-background.jpg)',
           backgroundSize: '100% 100%',
