@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 import openai
 import os
+import time
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -87,16 +88,29 @@ async def chat(request: ChatRequest):
             "content": request.message
         })
         
-        # Call OpenAI API
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=1000,
-            temperature=0.7
-        )
+        # Call OpenAI API with retry logic
+        max_retries = 3
+        retry_delay = 1
         
-        # Extract AI response
-        ai_response = response.choices[0].message.content
+        for attempt in range(max_retries):
+            try:
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=messages,
+                    max_tokens=1000,
+                    temperature=0.7
+                )
+                
+                # Extract AI response
+                ai_response = response.choices[0].message.content
+                break
+                
+            except openai.error.RateLimitError:
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                    retry_delay *= 2  # Exponential backoff
+                else:
+                    raise  # Re-raise on last attempt
         
         return ChatResponse(
             response=ai_response,
@@ -113,7 +127,7 @@ async def chat(request: ChatRequest):
         return ChatResponse(
             response="",
             success=False,
-            error="OpenAI rate limit exceeded. Please try again later."
+            error="OpenAI rate limit exceeded. Please wait a few minutes and try again. Consider upgrading your OpenAI plan at platform.openai.com/account/billing for higher limits."
         )
     except openai.error.APIError as e:
         return ChatResponse(
