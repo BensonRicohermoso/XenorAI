@@ -4,7 +4,7 @@
 
 - Python 3.8 or higher
 - pip (Python package manager)
-- OpenAI API key
+- MySQL Server 8.0 or higher
 
 ## Installation Steps
 
@@ -32,17 +32,41 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
+### 4. Set up MySQL database
+
+Follow the detailed instructions in [MYSQL_SETUP.md](MYSQL_SETUP.md) to:
+
+- Install MySQL Server
+- Create the database
+- Load predefined responses
+
+Quick setup:
+
+```bash
+mysql -u root -p < database_setup.sql
+```
+
+### 5. Configure environment variables
 
 ```bash
 # Copy the example file
 copy .env.example .env  # Windows
 cp .env.example .env    # macOS/Linux
 
-# Edit .env and add your OpenAI API key
+# Edit .env and add your MySQL credentials
 ```
 
-### 5. Run the server
+Update these values in `.env`:
+
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=xenorai_db
+```
+
+### 6. Run the server
 
 ```bash
 python main.py
@@ -58,6 +82,31 @@ The server will start at `http://localhost:8000`
 GET http://localhost:8000/
 ```
 
+Response:
+
+```json
+{
+  "status": "healthy",
+  "message": "XenorAI Backend is running"
+}
+```
+
+### Database Health Check
+
+```
+GET http://localhost:8000/health
+```
+
+Response:
+
+```json
+{
+  "status": "healthy",
+  "database": "connected",
+  "responses_count": 36
+}
+```
+
 ### Chat Endpoint
 
 ```
@@ -67,6 +116,16 @@ Content-Type: application/json
 {
   "message": "Your message here",
   "conversation_history": []
+}
+```
+
+Response:
+
+```json
+{
+  "response": "Bot response here",
+  "success": true,
+  "error": null
 }
 ```
 
