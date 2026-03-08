@@ -166,3 +166,39 @@ html {
   animation-delay: 0.5s;
   animation-fill-mode: both;
 }
+
+/* Shimmer animation for welcome page */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Additional animation delays for welcome page */
+.delay-300 {
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+  animation-fill-mode: both;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+  animation-fill-mode: both;
+}
