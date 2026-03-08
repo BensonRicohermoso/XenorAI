@@ -11,9 +11,11 @@ export default function Welcome() {
     setIsVisible(true);
   }, []);
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    // Set flag before navigation
     sessionStorage.setItem('fromWelcome', 'true');
-    router.push('/home');
+    // Navigate to home page
+    await router.push('/home');
   };
 
   return (

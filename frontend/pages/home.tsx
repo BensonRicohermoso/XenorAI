@@ -17,20 +17,34 @@ export default function Home() {
   const [isHeroVisible, setIsHeroVisible] = useState(false);
   const [isFeatureVisible, setIsFeatureVisible] = useState(false);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   
   const heroRef = useRef<HTMLDivElement>(null);
   const featureRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLElement>(null);
+  const hasChecked = useRef(false);
 
-  // Redirect to welcome page if accessed directly or refreshed
+  // Check if user came from welcome page
   useEffect(() => {
+    if (hasChecked.current) return;
+    hasChecked.current = true;
+    
     const fromWelcome = sessionStorage.getItem('fromWelcome');
+    
     if (!fromWelcome) {
+      // Not from welcome page, redirect
+      setShouldRedirect(true);
       router.replace('/');
     } else {
+      // From welcome page, clear the flag for next time
       sessionStorage.removeItem('fromWelcome');
     }
   }, [router]);
+
+  // Don't render if redirecting
+  if (shouldRedirect) {
+    return null;
+  }
 
   useEffect(() => {
     const observerOptions = {
