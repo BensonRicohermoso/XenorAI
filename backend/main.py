@@ -10,6 +10,7 @@ import re
 import time
 from collections import defaultdict
 from functools import lru_cache
+import google.generativeai as genai
 
 # Load environment variables
 load_dotenv()
@@ -40,6 +41,15 @@ DB_CONFIG = {
 # Validate database password is set
 if not DB_CONFIG['password']:
     raise ValueError("DB_PASSWORD environment variable must be set! Create a .env file with DB_PASSWORD=your_password")
+
+# Configure Gemini API
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY environment variable must be set! Add GEMINI_API_KEY to your .env file")
+
+genai.configure(api_key=GEMINI_API_KEY)
+# Use the latest available Gemini Flash model
+gemini_model = genai.GenerativeModel('gemini-2.5-flash')
 
 # Create connection pool
 try:
@@ -131,60 +141,34 @@ def get_db_connection():
         print(f"Error getting database connection: {e}")
         return None
 
-# Cached function to get all responses
-@lru_cache(maxsize=1)
-def get_cached_responses():
-    """Get all responses from database with caching"""
-    connection = get_db_connection()
-    if not connection:
-        return None
-    
+# Function to get response from Gemini API
+def get_gemini_response(user_message: str, conversation_history: List[Message] = None) -> str:
+    """Get a response from Gemini API"""
     try:
-        cursor = connection.cursor(dictionary=True)
-        cursor.execute("SELECT question_pattern, answer FROM responses ORDER BY id")
-        responses = cursor.fetchall()
-        return responses
-    except Error as e:
-        print(f"Database error: {e}")
-        return None
-    finally:
-        if cursor:
-            cursor.close()
-        if connection and connection.is_connected():
-            connection.close()
-
-# Function to find matching response
-def find_response(user_message: str) -> str:
-    """Find a matching response from the database"""
-    responses = get_cached_responses()
-    
-    if responses is None:
-        return "I'm having trouble connecting to my knowledge base right now. Please try again later."
-    
-    try:
-        # Normalize user message
-        user_message_lower = user_message.lower().strip()
+        # Build conversation context if history exists
+        full_prompt = user_message
+        if conversation_history and len(conversation_history) > 0:
+            # Create a conversation context from history
+            context = []
+            for msg in conversation_history[-10:]:  # Use last 10 messages for context
+                context.append(f"{msg.role}: {msg.content}")
+            
+            # Add current message
+            context.append(f"user: {user_message}")
+            full_prompt = "\n".join(context)
         
-        # Try to find a matching pattern
-        for response in responses:
-            pattern = response['question_pattern']
-            try:
-                # Validate pattern is safe before using in regex
-                if len(pattern) > 500:  # Prevent ReDoS attacks
-                    continue
-                # Use regex to match patterns with timeout protection
-                if re.search(pattern, user_message_lower, re.IGNORECASE):
-                    return response['answer']
-            except re.error:
-                # Skip invalid regex patterns
-                continue
+        # Generate response using Gemini
+        response = gemini_model.generate_content(full_prompt)
         
-        # If no match found, return default response
-        return "That's interesting! I'm still learning, so I might not have a specific answer for that. Feel free to ask me something else!"
-        
+        # Extract text from response
+        if response and hasattr(response, 'text') and response.text:
+            return response.text
+        else:
+            return "I apologize, but I couldn't generate a response. Please try again."
+            
     except Exception as e:
-        print(f"Error processing message: {e}")
-        return "I encountered an error while processing your message. Please try again."
+        print(f"Error calling Gemini API: {e}")
+        return "I'm having trouble generating a response right now. Please try again later."
 
 @app.get("/")
 async def root():
@@ -207,8 +191,8 @@ async def chat(request: ChatRequest, req: Request):
         
         user_message = request.message  # Already validated by Pydantic
         
-        # Find matching response from database
-        bot_response = find_response(user_message)
+        # Get response from Gemini API
+        bot_response = get_gemini_response(user_message, request.conversation_history)
         
         return ChatResponse(
             response=bot_response,
@@ -264,11 +248,6 @@ async def health_check():
             cursor.close()
         if connection and connection.is_connected():
             connection.close()
-    else:
-        return {
-            "status": "unhealthy",
-            "database": "disconnected"
-        }
 
 if __name__ == "__main__":
     import uvicorn
