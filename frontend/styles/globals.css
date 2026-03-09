@@ -202,3 +202,40 @@ html {
   animation-delay: 1s;
   animation-fill-mode: both;
 }
+
+/* Animation delays for loading dots */
+.animate-delay-150 {
+  animation-delay: 0.15s;
+  animation-fill-mode: both;
+}
+
+/* Chat page specific styles */
+.chat-textarea {
+  min-height: 48px;
+  max-height: 120px;
+  height: auto;
+}
+
+.chat-main-container {
+  height: calc(100vh - 280px);
+}
+
+@media (max-width: 768px) {
+  .chat-main-container {
+    height: calc(100vh - 240px);
+  }
+}
+
+/* Pulse animation delay for welcome page */
+.animate-pulse-delay {
+  animation-delay: 1s;
+}
+
+/* Grid background for index and home pages */
+.grid-background {
+  background-image: url(/grid-background.jpg);
+  background-size: 100% 100%;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+}

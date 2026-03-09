@@ -31,14 +31,9 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }) => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type your message here... (Press Enter to send)"
-            className="w-full px-4 py-3 border border-white/30 bg-white/10 text-white placeholder-white/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A2A5B] focus:border-transparent resize-none hide-scrollbar"
+            className="w-full px-4 py-3 border border-white/30 bg-white/10 text-white placeholder-white/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A2A5B] focus:border-transparent resize-none hide-scrollbar chat-textarea"
             rows={1}
             disabled={isLoading}
-            style={{ 
-              minHeight: '48px', 
-              maxHeight: '120px',
-              height: 'auto'
-            }}
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
               target.style.height = 'auto';

@@ -16,8 +16,15 @@ DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'port': int(os.getenv('DB_PORT', 3306)),
     'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD') or 'Benson7202006.',  # Fallback to known password
+    'password': os.getenv('DB_PASSWORD'),
 }
+
+# Validate password is set
+if not DB_CONFIG['password']:
+    print("ERROR: DB_PASSWORD environment variable is not set!")
+    print("Please create a .env file in the backend directory with:")
+    print("DB_PASSWORD=your_mysql_password")
+    exit(1)
 
 def setup_database():
     """Create database and tables with predefined responses"""

@@ -70,8 +70,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isLoading }) => {
                 <div className="px-4 py-3 rounded-2xl rounded-tl-none bg-white/10 backdrop-blur-sm border border-white/20 shadow-md">
                   <div className="flex space-x-2">
                     <div className="w-2 h-2 bg-[#6A6A9B] rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-[#4A4A7B] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 bg-[#2A2A5B] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    <div className="w-2 h-2 bg-[#4A4A7B] rounded-full animate-bounce animate-delay-150"></div>
+                    <div className="w-2 h-2 bg-[#2A2A5B] rounded-full animate-bounce animate-delay-300"></div>
                   </div>
                 </div>
               </div>

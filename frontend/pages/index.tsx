@@ -40,23 +40,16 @@ export default function Welcome() {
         />
       </div>
 
-      {/* Grid Background Overlay */}
-      <div 
-        className="fixed inset-0 opacity-20 pointer-events-none z-0"
-        style={{
-          backgroundImage: 'url(/grid-background.jpg)',
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center bottom',
-          backgroundRepeat: 'no-repeat',
-          mixBlendMode: 'screen'
-        }}
-      />
+
 
       {/* Animated Background Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#3A3A6B]/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#2A2A5B]/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#2A2A5B]/30 rounded-full blur-3xl animate-pulse animate-pulse-delay"></div>
       </div>
+
+      {/* Grid Background Overlay */}
+      <div className="fixed inset-0 opacity-20 pointer-events-none z-0 grid-background" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">

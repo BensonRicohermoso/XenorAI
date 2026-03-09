@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ChatWindow from '@/components/ChatWindow';
 import ChatInput from '@/components/ChatInput';
+import LogoLoop from '@/components/LogoLoop';
 import { sendMessage } from '@/utils/api';
 
 interface Message {
@@ -82,8 +83,36 @@ export default function Chat() {
         </div>
       </header>
 
+      {/* Logo Section */}
+      <section className="py-12 relative z-10">
+        <div className="container mx-auto px-6">
+          <h3 className="text-2xl font-semibold text-center mb-6 text-white/70">Powered by Advanced Technologies</h3>
+          <div className="relative h-20">
+            <LogoLoop
+              logos={[
+                { node: <span className="text-white text-4xl font-bold">OpenAI</span>, title: "OpenAI" },
+                { node: <span className="text-white text-4xl font-bold">Next.js</span>, title: "Next.js" },
+                { node: <span className="text-white text-4xl font-bold">Python</span>, title: "Python" },
+                { node: <span className="text-white text-4xl font-bold">FastAPI</span>, title: "FastAPI" },
+                { node: <span className="text-white text-4xl font-bold">MySQL</span>, title: "MySQL" },
+                { node: <span className="text-white text-4xl font-bold">TypeScript</span>, title: "TypeScript" },
+              ]}
+              speed={50}
+              direction="left"
+              logoHeight={48}
+              gap={80}
+              hoverSpeed={0}
+              scaleOnHover
+              fadeOut
+              fadeOutColor="rgba(18, 18, 53, 1)"
+              ariaLabel="Technology stack"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Main Chat Area */}
-      <main className="container mx-auto px-6 py-6 h-[calc(100vh-80px)] flex flex-col">
+      <main className="container mx-auto px-6 py-6 flex flex-col chat-main-container">
         <div className="flex-1 bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-w-5xl mx-auto w-full">
           <ChatWindow messages={messages} isLoading={isLoading} />
           <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
