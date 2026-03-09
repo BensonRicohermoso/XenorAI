@@ -68,6 +68,7 @@
 .logoloop--vertical .logoloop__item:last-child {
   margin-right: 0;
   margin-bottom: var(--logoloop-gap);
+  
 }
 
 .logoloop__node {
@@ -129,6 +130,7 @@
 }
 
 .logoloop--fade::before {
+  opacity: 0;
   left: 0;
   background: linear-gradient(
     to right,
@@ -138,6 +140,7 @@
 }
 
 .logoloop--fade::after {
+  opacity: 0;
   right: 0;
   background: linear-gradient(
     to left,

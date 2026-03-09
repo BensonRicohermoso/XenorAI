@@ -20,6 +20,7 @@ interface LogoImageItem {
   alt?: string;
   title?: string;
   href?: string;
+  ariaLabel?: string;
 }
 
 type LogoItem = LogoNodeItem | LogoImageItem;
@@ -280,8 +281,9 @@ export const LogoLoop: React.FC<LogoLoopProps> = memo(
           );
         }
         const isNodeItem = 'node' in item;
+        const shouldHideFromAria = !!item.href && !item.ariaLabel;
         const content = isNodeItem ? (
-          <span className="logoloop__node" aria-hidden={!!item.href && !item.ariaLabel ? "true" : "false"}>
+          <span className="logoloop__node" aria-hidden={shouldHideFromAria ? "true" : undefined}>
             {item.node}
           </span>
         ) : (
@@ -328,7 +330,7 @@ export const LogoLoop: React.FC<LogoLoopProps> = memo(
             className="logoloop__list"
             key={`copy-${copyIndex}`}
             role="list"
-            aria-hidden={copyIndex > 0 ? "true" : "false"}
+            aria-hidden={copyIndex > 0 ? "true" : undefined}
             ref={copyIndex === 0 ? seqRef : undefined}
           >
             {logos.map((item, itemIndex) => renderLogoItem(item, `${copyIndex}-${itemIndex}`))}

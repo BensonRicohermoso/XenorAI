@@ -5,6 +5,7 @@ import ChatWindow from '@/components/ChatWindow';
 import ChatInput from '@/components/ChatInput';
 import LogoLoop from '@/components/LogoLoop';
 import { sendMessage } from '@/utils/api';
+import { SiPython, SiNextdotjs, SiTypescript, SiTailwindcss, SiMysql, SiFastapi, SiGooglegemini } from 'react-icons/si';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -56,10 +57,10 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235]">
+    <div className="min-h-screen bg-gradient-to-br from-[#2A2A5B] to-[#121235] overflow-x-hidden max-w-full">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/20 shadow-lg">
-        <div className="container mx-auto px-6 py-[10px]">
+      <header className="sticky top-0 z-50">
+        <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-[10px]">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <Image 
@@ -67,15 +68,15 @@ export default function Chat() {
                 alt="XenorAI Logo" 
                 width={32} 
                 height={32}
-                className="rounded-lg"
+                className="rounded-lg w-7 h-7 sm:w-8 sm:h-8 hidden sm:block"
               />
-              <span className="text-xl font-bold text-white">
+              <span className="text-lg sm:text-xl font-bold text-white hidden sm:block">
                 XenorAI
               </span>
             </Link>
             <button
               onClick={handleClearChat}
-              className="px-4 py-2 text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
+              className="px-3 sm:px-4 py-2 text-white hover:bg-white/10 rounded-lg transition-colors duration-200 text-sm sm:text-base touch-manipulation min-h-[44px]"
             >
               Clear Chat
             </button>
@@ -84,18 +85,18 @@ export default function Chat() {
       </header>
 
       {/* Logo Section */}
-      <section className="py-12 relative z-10">
-        <div className="container mx-auto px-6">
-          <h3 className="text-2xl font-semibold text-center mb-6 text-white/70">Powered by Advanced Technologies</h3>
-          <div className="relative h-20">
+      <section className="py-6 sm:py-8 md:py-12 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-center mb-4 sm:mb-6 text-white/70">Powered by Advanced Technologies</h3>
+          <div className="relative h-16 sm:h-20">
             <LogoLoop
               logos={[
-                { node: <span className="text-white text-4xl font-bold">OpenAI</span>, title: "OpenAI" },
-                { node: <span className="text-white text-4xl font-bold">Next.js</span>, title: "Next.js" },
-                { node: <span className="text-white text-4xl font-bold">Python</span>, title: "Python" },
-                { node: <span className="text-white text-4xl font-bold">FastAPI</span>, title: "FastAPI" },
-                { node: <span className="text-white text-4xl font-bold">MySQL</span>, title: "MySQL" },
-                { node: <span className="text-white text-4xl font-bold">TypeScript</span>, title: "TypeScript" },
+                { node: <SiGooglegemini className="text-white" />, title: "Google Gemini" },
+                { node: <SiNextdotjs className="text-white" />, title: "Next.js" },
+                { node: <SiPython className="text-white" />, title: "Python" },
+                { node: <SiFastapi className="text-white" />, title: "FastAPI" },
+                { node: <SiMysql className="text-white" />, title: "MySQL" },
+                { node: <SiTypescript className="text-white" />, title: "TypeScript" },
               ]}
               speed={50}
               direction="left"

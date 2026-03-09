@@ -16,6 +16,13 @@ body {
       #121235
     );
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 * {
@@ -45,9 +52,44 @@ h1, h2, h3, h4, h5, h6, p, span, div, a, button {
   background: #555;
 }
 
+/* Hide scrollbar on mobile devices */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+  }
+  
+  /* Modern browsers (Chrome 121+, Firefox) */
+  @supports (scrollbar-width: none) {
+    * {
+      scrollbar-width: none;
+    }
+  }
+}
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Note: -webkit-overflow-scrolling is deprecated and removed */
+/* Modern browsers handle touch scrolling automatically */
+
+/* Reduce animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Fade in animation */
@@ -69,11 +111,20 @@ html {
 /* Hide scrollbar but keep scroll functionality */
 .hide-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  /* Chrome, Safari and Opera */
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Modern browsers (Chrome 121+, Firefox) with fallback */
+@supports (scrollbar-width: none) {
+  .hide-scrollbar {
+    scrollbar-width: none;  /* Firefox and modern Chrome */
+  }
 }
 
 /* Slide up animation */
@@ -127,18 +178,71 @@ html {
 /* Animation classes */
 .animate-slideUp {
   animation: slideUp 0.8s ease-out;
+  will-change: transform, opacity;
 }
 
 .animate-slideInLeft {
   animation: slideInLeft 0.8s ease-out;
+  will-change: transform, opacity;
 }
 
 .animate-slideInRight {
   animation: slideInRight 0.8s ease-out;
+  will-change: transform, opacity;
 }
 
 .animate-scaleFadeIn {
   animation: scaleFadeIn 0.6s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Mobile-optimized animations */
+@media (max-width: 640px) {
+  .animate-slideUp {
+    animation-duration: 0.5s;
+  }
+  
+  .animate-slideInLeft,
+  .animate-slideInRight {
+    animation-duration: 0.5s;
+  }
+  
+  .animate-scaleFadeIn {
+    animation-duration: 0.4s;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 /* Staggered animation delays */

@@ -19,7 +19,8 @@ pip install -r requirements.txt
 echo ""
 echo "⚠️  IMPORTANT: Before starting the servers..."
 echo "1. Copy backend/.env.example to backend/.env"
-echo "2. Add your OpenAI API key to backend/.env"
+echo "2. Add your Gemini API key to backend/.env"
+echo "3. Add your MySQL password to backend/.env"
 echo ""
 read -p "Press Enter to continue after setting up .env file..."
 

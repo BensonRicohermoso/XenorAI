@@ -6,6 +6,8 @@ import ChatWindow from '@/components/ChatWindow';
 import ChatInput from '@/components/ChatInput';
 import LogoLoop from '@/components/LogoLoop';
 import { sendMessage } from '@/utils/api';
+import { SiPython, SiNextdotjs, SiTypescript, SiTailwindcss, SiMysql, SiFastapi } from 'react-icons/si';
+import { SiGooglegemini } from 'react-icons/si';
 
 // Dynamic import to prevent SSR issues with WebGL
 const DarkVeil = dynamic(() => import('@/components/DarkVeil'), {
@@ -120,19 +122,19 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen relative">
+    <div className="h-screen relative overflow-x-hidden max-w-full">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 py-4">
-        <div className="container mx-auto px-6">
+      <nav className="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center space-x-2">
             <Image 
               src="/xenorai-logo.jpg" 
               alt="XenorAI Logo" 
               width={40} 
               height={40}
-              className="rounded-lg"
+              className="rounded-lg w-8 h-8 sm:w-10 sm:h-10 hidden sm:block"
             />
-            <span className="text-2xl font-bold text-white">
+            <span className="text-xl sm:text-2xl font-bold text-white hidden sm:block">
               XenorAI
             </span>
           </div>
@@ -155,29 +157,29 @@ export default function Home() {
       <div className="fixed inset-0 opacity-20 pointer-events-none z-0 grid-background" />
 
       {/* Content */}
-      <div className="relative z-10 h-full overflow-y-scroll snap-y snap-mandatory pt-20 hide-scrollbar">
+      <div className="relative z-10 h-full overflow-y-scroll overflow-x-hidden snap-y snap-mandatory pt-20 hide-scrollbar max-w-full">
       {/* Hero Section with Chat */}
-      <section ref={heroRef} className="h-screen snap-start flex flex-col relative">
+      <section ref={heroRef} className="h-screen snap-start flex flex-col relative overflow-x-hidden max-w-full">
 
-        <div className="flex-1 container mx-auto px-6 py-8 flex items-center relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl mx-auto">
+        <div className="flex-1 container mx-auto px-4 sm:px-6 py-4 sm:py-8 flex items-center relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 w-full max-w-7xl mx-auto">
             {/* Left Side - Hero Content */}
-            <div className="flex flex-col justify-center">
-              <h1 className={`text-6xl font-bold mb-6 text-white leading-tight ${isHeroVisible ? 'animate-slideInLeft' : 'opacity-0'}`}>
+            <div className="flex flex-col justify-center text-center lg:text-left">
+              <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white leading-tight ${isHeroVisible ? 'animate-slideInLeft' : 'opacity-0'}`}>
                 Your Intelligent AI Assistant
               </h1>
-              <p className={`text-xl text-white mb-8 ${isHeroVisible ? 'animate-slideInLeft animate-delay-200' : 'opacity-0'}`}>
+              <p className={`text-base sm:text-lg md:text-xl text-white mb-4 sm:mb-8 ${isHeroVisible ? 'animate-slideInLeft animate-delay-200' : 'opacity-0'}`}>
                 Experience the power of conversational AI. XenorAI helps you with answers, 
                 creative content, problem-solving, and much more.
               </p>
-              <p className={`text-lg text-white/80 ${isHeroVisible ? 'animate-slideInLeft animate-delay-300' : 'opacity-0'}`}>
+              <p className={`text-sm sm:text-base md:text-lg text-white/80 ${isHeroVisible ? 'animate-slideInLeft animate-delay-300' : 'opacity-0'}`}>
                 Start chatting with our AI assistant right now →
               </p>
             </div>
 
             {/* Right Side - Chat Interface */}
             <div className="flex flex-col justify-center">
-              <div className={`bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl overflow-hidden h-[600px] ${isHeroVisible ? 'animate-slideInRight animate-delay-200' : 'opacity-0'}`}>
+              <div className={`bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl overflow-hidden h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] ${isHeroVisible ? 'animate-slideInRight animate-delay-200' : 'opacity-0'}`}>
                 <div className="h-full flex flex-col">
                   <ChatWindow messages={messages} isLoading={isLoading} />
                   <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
@@ -189,18 +191,18 @@ export default function Home() {
       </section>
 
       {/* Logo Loop Section */}
-      <section className="py-16 snap-start relative z-10">
-        <div className="container mx-auto px-6">
-          <h3 className="text-2xl font-semibold text-center mb-8 text-white/70">Powered by Advanced Technologies</h3>
-          <div className="relative h-24">
+      <section className="py-8 sm:py-12 md:py-16 snap-start relative z-10 overflow-x-hidden max-w-full">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-center mb-6 sm:mb-8 text-white/70">Powered by Advanced Technologies</h3>
+          <div className="relative h-16 sm:h-20 md:h-24">
             <LogoLoop
               logos={[
-                { node: <span className="text-white text-4xl font-bold">OpenAI</span>, title: "OpenAI" },
-                { node: <span className="text-white text-4xl font-bold">Next.js</span>, title: "Next.js" },
-                { node: <span className="text-white text-4xl font-bold">Python</span>, title: "Python" },
-                { node: <span className="text-white text-4xl font-bold">FastAPI</span>, title: "FastAPI" },
-                { node: <span className="text-white text-4xl font-bold">MySQL</span>, title: "MySQL" },
-                { node: <span className="text-white text-4xl font-bold">TypeScript</span>, title: "TypeScript" },
+                { node: <SiGooglegemini className="text-white" />, title: "Google Gemini" },
+                { node: <SiNextdotjs className="text-white" />, title: "Next.js" },
+                { node: <SiPython className="text-white" />, title: "Python" },
+                { node: <SiFastapi className="text-white" />, title: "FastAPI" },
+                { node: <SiMysql className="text-white" />, title: "MySQL" },
+                { node: <SiTypescript className="text-white" />, title: "TypeScript" },
               ]}
               speed={50}
               direction="left"
@@ -217,15 +219,15 @@ export default function Home() {
       </section>
 
       {/* What is XenorAI Section */}
-      <section ref={featureRef} className="min-h-screen snap-start flex items-center py-20 relative z-10">
-        <div className="container mx-auto px-6">
+      <section ref={featureRef} className="min-h-screen snap-start flex items-center py-12 sm:py-16 md:py-20 relative z-10 overflow-x-hidden max-w-full">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
-            <h2 className={`text-5xl font-bold text-center mb-4 text-white ${isFeatureVisible ? 'animate-slideUp' : 'opacity-0'}`}>What is XenorAI?</h2>
-            <p className={`text-xl text-center text-white/80 mb-16 max-w-3xl mx-auto ${isFeatureVisible ? 'animate-slideUp animate-delay-200' : 'opacity-0'}`}>
+            <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4 text-white ${isFeatureVisible ? 'animate-slideUp' : 'opacity-0'}`}>What is XenorAI?</h2>
+            <p className={`text-base sm:text-lg md:text-xl text-center text-white/80 mb-8 sm:mb-12 md:mb-16 max-w-3xl mx-auto px-4 ${isFeatureVisible ? 'animate-slideUp animate-delay-200' : 'opacity-0'}`}>
               Your intelligent companion for everyday conversations and assistance
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               {/* Card 1 - Smart Conversations */}
               <div className={`group relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-blue-400/50 hover:shadow-[0_0_30px_rgba(96,165,250,0.3)] transition-all duration-500 hover:scale-105 overflow-hidden ${isFeatureVisible ? 'animate-scaleFadeIn animate-delay-300' : 'opacity-0'}`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -273,22 +275,38 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+
+              {/* Card 4 - Context Memory */}
+              <div className={`group relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-orange-400/50 hover:shadow-[0_0_30px_rgba(251,146,60,0.3)] transition-all duration-500 hover:scale-105 overflow-hidden ${isFeatureVisible ? 'animate-scaleFadeIn animate-delay-600' : 'opacity-0'}`}>
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-orange-500/50 group-hover:scale-110 transition-transform duration-300">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-orange-300 transition-colors duration-300">Context Memory</h3>
+                  <p className="text-white/80 leading-relaxed text-base">
+                    Remembers your conversation context, providing coherent and relevant responses throughout your entire chat session.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer ref={footerRef} className="min-h-screen snap-start py-20 relative z-10">
-        <div className="container mx-auto px-6">
+      <footer ref={footerRef} className="min-h-screen snap-start py-12 sm:py-16 md:py-20 relative z-10 overflow-x-hidden max-w-full">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             {/* Footer Title */}
-            <div className="text-center mb-16">
-              <h2 className={`text-5xl font-bold text-white mb-4 ${isFooterVisible ? 'animate-slideUp' : 'opacity-0'}`}>Get In Touch</h2>
-              <p className={`text-xl text-white/80 ${isFooterVisible ? 'animate-slideUp animate-delay-200' : 'opacity-0'}`}>Let's connect and collaborate</p>
+            <div className="text-center mb-8 sm:mb-12 md:mb-16">
+              <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-4 ${isFooterVisible ? 'animate-slideUp' : 'opacity-0'}`}>Get In Touch</h2>
+              <p className={`text-base sm:text-lg md:text-xl text-white/80 ${isFooterVisible ? 'animate-slideUp animate-delay-200' : 'opacity-0'}`}>Let's connect and collaborate</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12 md:mb-16">
               {/* Connect with Me */}
               <div className={`group relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-blue-400/50 hover:shadow-[0_0_30px_rgba(96,165,250,0.3)] transition-all duration-500 overflow-hidden ${isFooterVisible ? 'animate-slideInLeft animate-delay-300' : 'opacity-0'}`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -296,7 +314,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-blue-300 transition-colors duration-300">Connect with Me</h3>
                   <div className="space-y-4">
                   {/* GitHub */}
-                  <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
+                  <a href="https://github.com/BensonRicohermoso" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
                     <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center group-hover/item:scale-110 group-hover/item:shadow-lg group-hover/item:shadow-blue-500/50 transition-all duration-300">
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
@@ -304,12 +322,12 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">GitHub</p>
-                      <p className="font-medium">github.com/yourusername</p>
+                      <p className="font-medium">github.com/BensonRicohermoso</p>
                     </div>
                   </a>
 
                   {/* LinkedIn */}
-                  <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
+                  <a href="https://www.linkedin.com/in/benson-ricohermoso-0ab240302/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center group-hover/item:scale-110 group-hover/item:shadow-lg group-hover/item:shadow-blue-500/50 transition-all duration-300">
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -317,20 +335,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">LinkedIn</p>
-                      <p className="font-medium">linkedin.com/in/yourprofile</p>
-                    </div>
-                  </a>
-
-                  {/* Instagram */}
-                  <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-white hover:text-pink-400 transition-all duration-300 group/item">
-                    <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center group-hover/item:scale-110 group-hover/item:shadow-lg group-hover/item:shadow-pink-500/50 transition-all duration-300">
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-sm text-white/60">Instagram</p>
-                      <p className="font-medium">@yourusername</p>
+                      <p className="font-medium">linkedin.com/in/benson-ricohermoso</p>
                     </div>
                   </a>
                 </div>
@@ -344,7 +349,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-purple-300 transition-colors duration-300">Contact Me</h3>
                   <div className="space-y-4">
                   {/* Email */}
-                  <a href="mailto:your.email@example.com" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
+                  <a href="mailto:bensonricohermoso@gmail.com" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center group-hover/item:scale-110 group-hover/item:shadow-lg group-hover/item:shadow-blue-500/50 transition-all duration-300">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -352,12 +357,12 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">Email</p>
-                      <p className="font-medium">your.email@example.com</p>
+                      <p className="font-medium">bensonricohermoso@gmail.com</p>
                     </div>
                   </a>
 
                   {/* Mobile Number */}
-                  <a href="tel:+1234567890" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
+                  <a href="tel:+639690796200" className="flex items-center space-x-4 text-white hover:text-blue-400 transition-all duration-300 group/item">
                     <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center group-hover/item:scale-110 group-hover/item:shadow-lg group-hover/item:shadow-green-500/50 transition-all duration-300">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -365,7 +370,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">Mobile</p>
-                      <p className="font-medium">+1 (234) 567-890</p>
+                      <p className="font-medium">09690796200</p>
                     </div>
                   </a>
                 </div>
