@@ -63,7 +63,7 @@ export default function Chat() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <Image 
-                src="/finchatbot.jpg" 
+                src="/xenorai-logo.jpg" 
                 alt="XenorAI Logo" 
                 width={32} 
                 height={32}

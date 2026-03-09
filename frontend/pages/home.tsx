@@ -126,7 +126,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="flex items-center space-x-2">
             <Image 
-              src="/finchatbot.jpg" 
+              src="/xenorai-logo.jpg" 
               alt="XenorAI Logo" 
               width={40} 
               height={40}
