@@ -180,6 +180,6 @@ async def health_check():
         "gemini_configured": gemini_client is not None
     }
 
-# Vercel serverless function handler
-from mangum import Mangum
-handler = Mangum(app, lifespan="off")
+# Export app for Vercel's ASGI support
+handler = app
+__all__ = ['handler', 'app']
