@@ -16,12 +16,7 @@ app = FastAPI(title="XenorAI Backend")
 # CORS middleware - Updated for Vercel deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "https://*.vercel.app",
-        "https://xenorai.vercel.app"  # Replace with your actual Vercel domain
-    ],
+    allow_origin_regex=r"https://.*\.vercel\.app|http://localhost:300[01]",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -180,5 +175,6 @@ async def health_check():
         "gemini_configured": gemini_model is not None
     }
 
-# Export the app for Vercel
-handler = app
+# Vercel serverless function handler
+from mangum import Mangum
+handler = Mangum(app, lifespan="off")
