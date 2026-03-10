@@ -68,10 +68,18 @@ In the Vercel dashboard, add these environment variables:
 
 #### Required Variables:
 
-- **`GEMINI_API_KEY`**: Your Google Gemini API key
+- **`GEMINI_API_KEY`**: Your Google Gemini API key (REQUIRED)
   - Get from: https://makersuite.google.com/app/apikey
+  - Example: `AIzaSy...`
 
-#### Optional Variables (for database):
+#### Frontend Variables:
+
+- **`NEXT_PUBLIC_API_URL`**: **IMPORTANT - Leave this BLANK or DO NOT set it**
+  - When blank/unset, the app uses relative URLs to call Vercel serverless functions
+  - DO NOT set to `http://localhost:8000` on Vercel
+  - Only set in local `.env.local` for development
+
+#### Optional Database Variables (if using MySQL):
 
 - **`DB_HOST`**: Your MySQL host (e.g., from PlanetScale or Railway)
 - **`DB_PORT`**: Database port (default: 3306)
@@ -79,11 +87,7 @@ In the Vercel dashboard, add these environment variables:
 - **`DB_PASSWORD`**: Database password
 - **`DB_NAME`**: Database name (default: xenorai_db)
 
-#### Frontend Variable:
-
-- **`NEXT_PUBLIC_API_URL`**: Leave empty or set to your Vercel domain
-  - If empty, it will use relative URLs (recommended)
-  - Example: `https://your-app.vercel.app`
+**Note:** Currently, the Vercel deployment uses serverless functions without database. Database variables are only needed if you integrate MySQL support into the Next.js API route.
 
 ### 5. Deploy
 

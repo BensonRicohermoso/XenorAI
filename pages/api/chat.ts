@@ -68,7 +68,8 @@ export default async function handler(
     }
 
     // Call Gemini API directly via REST
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // Using gemini-2.5-flash (latest available model as of March 2026)
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     
     const requestBody = {
       contents: [
