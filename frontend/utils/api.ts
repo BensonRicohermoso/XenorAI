@@ -28,7 +28,7 @@ export const sendMessage = async (
     }
 
     const response = await axios.post<ChatResponse>(
-      `${API_BASE_URL}/chat`, 
+      `${API_BASE_URL}/api/chat`, 
       {
         message,
         conversation_history: conversationHistory,

@@ -1,0 +1,36 @@
+# Local development files
+
+.env
+.env.local
+\*.pyc
+**pycache**/
+.venv/
+venv/
+
+# Backend files (using api/ for Vercel)
+
+backend/
+
+# Build outputs
+
+frontend/.next
+frontend/node_modules
+frontend/out
+
+# Logs
+
+\*.log
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# IDE
+
+.vscode/
+.idea/
+
+# Testing
+
+.pytest_cache
