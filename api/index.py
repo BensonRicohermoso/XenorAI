@@ -179,7 +179,3 @@ async def health_check():
         "status": "healthy",
         "gemini_configured": gemini_client is not None
     }
-
-# Export app for Vercel's ASGI support
-handler = app
-__all__ = ['handler', 'app']
