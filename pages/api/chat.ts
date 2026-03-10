@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 
 type ChatRequest = {
   message: string;
@@ -58,11 +57,6 @@ export default async function handler(
       return;
     }
 
-    // Initialize Gemini - Updated SDK with better model support
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // Use gemini-2.0-flash-exp (experimental but free)
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
-
     // Build prompt with history
     let fullPrompt = message;
     if (conversation_history && conversation_history.length > 0) {
@@ -73,15 +67,46 @@ export default async function handler(
       fullPrompt = `Previous conversation:\n${context}\n\nCurrent message: ${message}`;
     }
 
-    // Call Gemini API
+    // Call Gemini API directly via REST
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const requestBody = {
+      contents: [
+        {
+          parts: [
+            {
+              text: fullPrompt
+            }
+          ]
+        }
+      ]
+    };
+
     let botResponse: string;
     try {
-      const result = await model.generateContent(fullPrompt);
-      const response = await result.response;
-      botResponse = response.text();
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Gemini API error:', errorData);
+        res.status(500).json({
+          response: '',
+          success: false,
+          error: `Gemini API error: ${errorData.error?.message || response.statusText}`,
+        });
+        return;
+      }
+
+      const data = await response.json();
+      botResponse = data.candidates[0]?.content?.parts[0]?.text || "I'm having trouble processing your request.";
     } catch (error: any) {
       console.error('Gemini API error:', error.message || error);
-      // Return more specific error for debugging
       res.status(500).json({
         response: '',
         success: false,
