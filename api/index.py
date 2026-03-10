@@ -130,7 +130,7 @@ async def root():
         "version": "1.0.0"
     }
 
-@app.post("/api/chat", response_model=ChatResponse)
+@app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest, req: Request):
     """
     Chat endpoint that processes user messages and returns AI responses
@@ -167,7 +167,7 @@ async def chat(request: ChatRequest, req: Request):
             error="Internal server error"
         )
 
-@app.get("/api/health")
+@app.get("/health")
 async def health_check():
     """Check API health"""
     return {
