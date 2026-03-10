@@ -6,7 +6,8 @@ import os
 import re
 import time
 from collections import defaultdict
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 # Rate limiting
 rate_limit_storage = defaultdict(list)
@@ -25,9 +26,10 @@ app.add_middleware(
 # Configure Gemini API
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel('gemini-2.5-flash')
+    gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+    gemini_model = 'gemini-2.0-flash-exp'
 else:
+    gemini_client = None
     gemini_model = None
 
 # Pydantic models with validation
@@ -101,7 +103,7 @@ def check_rate_limit(client_ip: str, limit: int = 30, window: int = 60) -> bool:
 def get_gemini_response(user_message: str, conversation_history: List[Message] = None) -> str:
     """Get a response from Gemini API"""
     try:
-        if not gemini_model:
+        if not gemini_client or not gemini_model:
             return "AI service is currently unavailable. Please check configuration."
         
         # Build conversation context if history exists
@@ -113,8 +115,11 @@ def get_gemini_response(user_message: str, conversation_history: List[Message] =
             ])
             full_prompt = f"Previous conversation:\n{context}\n\nCurrent message: {user_message}"
         
-        # Generate response using Gemini
-        response = gemini_model.generate_content(full_prompt)
+        # Generate response using new Gemini SDK
+        response = gemini_client.models.generate_content(
+            model=gemini_model,
+            contents=full_prompt
+        )
         return response.text
         
     except Exception as e:
@@ -172,7 +177,7 @@ async def health_check():
     """Check API health"""
     return {
         "status": "healthy",
-        "gemini_configured": gemini_model is not None
+        "gemini_configured": gemini_client is not None
     }
 
 # Vercel serverless function handler
