@@ -1,1 +1,15 @@
-{}
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/.next",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ],
+  "functions": {
+    "frontend/api/*.py": {
+      "runtime": "python3.9"
+    }
+  }
+}
