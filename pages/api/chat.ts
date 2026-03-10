@@ -60,7 +60,7 @@ export default async function handler(
 
     // Initialize Gemini
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     // Build prompt with history
     let fullPrompt = message;
@@ -79,8 +79,14 @@ export default async function handler(
       const response = await result.response;
       botResponse = response.text();
     } catch (error: any) {
-      console.error('Gemini API error:', error);
-      botResponse = "I'm having trouble processing your request. Please try again.";
+      console.error('Gemini API error:', error.message || error);
+      // Return more specific error for debugging
+      res.status(500).json({
+        response: '',
+        success: false,
+        error: `Gemini API error: ${error.message || 'Unknown error'}`,
+      });
+      return;
     }
 
     res.status(200).json({
