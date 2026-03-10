@@ -58,9 +58,10 @@ export default async function handler(
       return;
     }
 
-    // Initialize Gemini
+    // Initialize Gemini with the correct model
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Use gemini-pro which is widely available
+    const model = genAI.getGenerativeModel({ model: 'models/gemini-pro' });
 
     // Build prompt with history
     let fullPrompt = message;
