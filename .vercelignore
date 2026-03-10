@@ -7,15 +7,9 @@
 .venv/
 venv/
 
-# Backend files (using api/ for Vercel)
+# Backend (not deployed to Vercel)
 
 backend/
-
-# Build outputs
-
-frontend/.next
-frontend/node_modules
-frontend/out
 
 # Logs
 
